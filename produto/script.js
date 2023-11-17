@@ -52,7 +52,7 @@ async function space_insert(){
     main.appendChild(div)
     div.insertAdjacentHTML("afterbegin", `
     
-    <div>
+    <div id="modal_inserir">
     <button id="sair">X</button>
     <p>Editar Produto</p>
     <form>
@@ -108,7 +108,10 @@ async function cadastrar_produto(){
     
     if(res.status == 201){
         const resJson = await res.json()
-        toastify("Ok, login efetuado com sucesso!","ok")
+        setInterval(()=>{
+            toastify("Ok, login efetuado com sucesso!","ok")
+        },1000)
+        get_prod();
         console.log(resJson)
     }else{
          toastify(res.json(),"error")
@@ -119,11 +122,10 @@ async function cadastrar_produto(){
 async function prod_id(id){
     console.log(id)
     const res = await fetch(`http://localhost:3001/produto/${id}`)
-    space_editar();
+    space_editar(id);
 }
 
-async function space_editar(){
-
+async function space_editar(id){
 
     const main = document.querySelector("main")
     const div = document.createElement("div")
@@ -131,7 +133,7 @@ async function space_editar(){
     main.appendChild(div)
     div.insertAdjacentHTML("afterbegin", `
     
-    <div>
+    <div id="modal_inserir" >
     <button id="sair">X</button>
     <p>Editar Produto</p>
     <form>
@@ -154,7 +156,8 @@ async function space_editar(){
     </form>
     </div>
 
-    `)
+    `
+    )
 
 const form = document.querySelector("form")
 form.addEventListener("submit",(event)=>{
@@ -175,6 +178,11 @@ sair.addEventListener("click", ()=>{
 
 async function excluir(id){
 
-    const res = await fetch(`http://localhost:3001/produto/${id}`)
+    const res = await fetch(`http://localhost:3001/produto/${id}`,
+    {
+        headers: my_headers,
+        method: "DELETE",
+        body:bodyJson
+    })
 
 }
