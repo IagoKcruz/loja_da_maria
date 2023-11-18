@@ -24,9 +24,9 @@ async function render_lista(list=[]){
     const ul = document.querySelector(".prods");
     ul.insertAdjacentHTML("afterbegin", `
     <li>
-    <p>Nome = ${prod.id}</p>
-    <p>Preço = ${prod.id}Custo</p>
-    <p>Proço de Venda = ${prod.id}</p>
+    <p>Nome = ${prod.nome}</p>
+    <p>Preço de Custo= ${prod.v_custo}</p>
+    <p>Proço de Venda = ${prod.v_venda}</p>
     </li>
     `)  
     
@@ -47,14 +47,14 @@ p.addEventListener("click", ()=>{
 async function space_insert(){
 
     const main = document.querySelector("main")
-    const div = document.createElement("div")
-    div.classList.add("modal")
-    main.appendChild(div)
-    div.insertAdjacentHTML("afterbegin", `
+    const div1 = document.createElement("div")
+    div1.classList.add("modal")
+    main.appendChild(div1)
+    div1.insertAdjacentHTML("afterbegin", `
     
     <div id="modal_inserir">
     <button id="sair">X</button>
-    <p>Editar Produto</p>
+    <p>Inserir Produto</p>
     <form>
     <div>
     <label for="nome">Nome</label>
@@ -83,8 +83,8 @@ form.addEventListener("submit",(event)=>{
 
 const sair = document.querySelector("#sair");
 sair.addEventListener("click", ()=>{
-div.remove();
-
+    console.log(sair)
+div1.remove();
 })
 
 }
@@ -122,10 +122,11 @@ async function cadastrar_produto(){
 async function prod_id(id){
     console.log(id)
     const res = await fetch(`http://localhost:3001/produto/${id}`)
-    space_editar(id);
+    const resJson = await res.json()
+    space_editar(resJson);
 }
 
-async function space_editar(id){
+async function space_editar(prod){
 
     const main = document.querySelector("main")
     const div = document.createElement("div")
@@ -139,15 +140,15 @@ async function space_editar(id){
     <form>
     <div>
     <label for="nome">Nome</label>
-    <input type="text" id="nome" value="">            
+    <input type="text" id="nome" value="${prod.nome}">            
     </div>
     <div>
     <label for="v_venda">Valor de Venda</label>
-    <input type="text" id="v_venda" value="">
+    <input type="text" id="v_venda" value="${prod.v_venda}">
     </div>
     <div>
     <label for="v_custo">Valor de Custo</label>
-    <input type="text" id="v_custo" value="">
+    <input type="text" id="v_custo" value="${prod.v_custo}">
     </div>
     <div class="actions">
     <button type="submit">Salvar</button>
@@ -166,11 +167,12 @@ form.addEventListener("submit",(event)=>{
 
 const bnt_exc = document.querySelector("#excluir");
 bnt_exc.addEventListener("click", ()=>{
-    excluir(id);
+    excluir(prod.id);
 })
 
 const sair = document.querySelector("#sair");
 sair.addEventListener("click", ()=>{
+    console.log(div)
     div.remove();
 })
 
