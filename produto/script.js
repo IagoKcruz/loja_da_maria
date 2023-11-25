@@ -20,13 +20,27 @@ get_prod()
 
 async function render_lista(list=[]){
 
+    const res_opt = await fetch(`http://localhost:3001/opt`)
+    const resJson_opt = await res_opt.json()
+
     list.forEach((prod)=>{
+    
+    console.log(resJson_opt, prod)
+    
+    resJson_opt.forEach((opt)=>{
+        if(opt.id == prod.opt_ativo){
+            prod.opt_ativo = opt.descr
+            console.log(opt.descr)
+        }
+    })
+
     const ul = document.querySelector(".prods");
     ul.insertAdjacentHTML("afterbegin", `
     <li>
     <p>Nome = ${prod.nome}</p>
     <p>Preço de Custo= ${prod.v_custo}</p>
     <p>Proço de Venda = ${prod.v_venda}</p>
+    <p>Status = ${prod.opt_ativo}</p>
     </li>
     `)  
     
@@ -104,11 +118,15 @@ div1.remove();
 }
 
 async function cadastrar_produto(){
+    const select = document.querySelector("#prod_select")
+    if(select.value == ""){
+        select.value = "1"
+    }
     const user = {
         nome : document.querySelector("#nome").value,
         v_venda :  document.querySelector("#v_venda").value,
         v_custo :  document.querySelector("#v_custo").value,
-        opt_ativo : document.querySelector("#prod_select").value
+        opt_ativo : select.value
     }
     console.log(user)
     const bodyJson = JSON.stringify(user)
@@ -126,7 +144,7 @@ async function cadastrar_produto(){
         setTimeout(()=>{
             toastify("Cadastrado com sucesso","ok")
         },1000)
-        get_prod();
+        window.location.reload()
         console.log(resJson)
     }else{
          toastify(res.json(),"error")
@@ -190,7 +208,9 @@ resJson_opt.forEach(opt => {
 
 const form = document.querySelector("form")
 form.addEventListener("submit",(event)=>{
-    editar_produto()
+    event.preventDefault()
+    console.log(prod.id)
+    alterar_produto(prod.id)
 })
 
 const bnt_exc = document.querySelector("#excluir");
@@ -203,6 +223,41 @@ sair.addEventListener("click", ()=>{
     console.log(div)
     div.remove();
 })
+
+}
+
+async function alterar_produto(id){
+    const select = document.querySelector("#prod_select")
+    if(select.value == ""){
+        select.value = "1"
+    }
+    const user = {
+        nome : document.querySelector("#nome").value,
+        v_venda :  document.querySelector("#v_venda").value,
+        v_custo :  document.querySelector("#v_custo").value,
+        opt_ativo : select.value
+    }
+    console.log(user)   
+    const bodyJson = JSON.stringify(user)
+    console.log(bodyJson)
+    const res = await fetch(
+        `http://localhost:3001/produto/${id}`,
+    {
+        headers: my_headers,
+        method: "PUT",
+        body:bodyJson
+    })
+    
+    if(res.status == 200){
+        const resJson = await res.json()
+        setTimeout(()=>{
+            toastify("Alterado com sucesso","ok")
+        },1000)
+        window.location.reload()
+        console.log(resJson)
+    }else{
+         toastify(res.json(),"error")
+    }
 
 }
 
