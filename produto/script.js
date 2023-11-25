@@ -271,3 +271,66 @@ async function excluir(id){
     })
     get_prod();
 }
+
+async function status_prod(){
+
+    const res_opt = await fetch(`http://localhost:3001/opt`)
+    const resJson_opt = await res_opt.json()
+    const div = document.querySelector("#status_prod");
+    resJson_opt.forEach(opt => {    
+    div.insertAdjacentHTML("afterbegin",`
+    <button class="status" value="${opt.id}">${opt.descr}</button>
+    `)
+    });
+    const opt_prod = document.querySelectorAll(".status");
+    opt_prod.forEach(Element => {
+       Element.addEventListener("click", ()=>{
+        console.log(Element)
+        list_filter(Element.value)
+        }) 
+    })
+}
+
+status_prod()
+
+async function list_filter(id){
+
+    const res = await fetch(`http://localhost:3001/produto?opt_ativo=${id}`)
+    const resJson = await res.json();
+    //console.log(resJson)
+    render_filter(resJson)
+}
+get_prod()
+
+async function render_filter(list=[]){
+    const ul = document.querySelector(".prods");
+    const res_opt = await fetch(`http://localhost:3001/opt`)
+    const resJson_opt = await res_opt.json()
+    ul.innerHTML = "";
+    list.forEach((prod)=>{
+    
+    console.log(resJson_opt, prod)
+    
+    resJson_opt.forEach((opt)=>{
+        if(opt.id == prod.opt_ativo){
+            prod.opt_ativo = opt.descr
+            console.log(opt.descr)
+        }
+        })
+        ul.insertAdjacentHTML("afterbegin", `
+            <li>
+            <p>Nome = ${prod.nome}</p>
+            <p>Preço de Custo= ${prod.v_custo}</p>
+            <p>Proço de Venda = ${prod.v_venda}</p>
+            <p>Status = ${prod.opt_ativo}</p>
+            </li>
+            `)  
+    
+        const li = document.querySelector("li")
+        li.addEventListener("click",()=>{
+            prod_id(prod.id)
+        })
+
+    })
+
+}
