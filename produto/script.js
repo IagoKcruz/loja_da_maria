@@ -68,11 +68,25 @@ async function space_insert(){
     <label for="v_custo">Valor de Custo</label>
     <input type="text" id="v_custo">
     </div>
+    <div>
+    <select id="prod_select">
+    </select>
+    </div>
     <button type="submit">Cadastrar</button>
     </form> 
     </div>
 
     `)
+
+
+const res_opt = await fetch(`http://localhost:3001/opt`)
+const resJson_opt = await res_opt.json()
+resJson_opt.forEach(opt => {
+        const select = document.querySelector("#prod_select")
+        select.insertAdjacentHTML("afterbegin",`
+        <option value="${opt.id}">${opt.descr}</option>
+        `)
+});
 
 const form = document.querySelector("form")
 form.addEventListener("submit",(event)=>{
@@ -93,7 +107,8 @@ async function cadastrar_produto(){
     const user = {
         nome : document.querySelector("#nome").value,
         v_venda :  document.querySelector("#v_venda").value,
-        v_custo :  document.querySelector("#v_custo").value
+        v_custo :  document.querySelector("#v_custo").value,
+        opt_ativo : document.querySelector("#prod_select").value
     }
     console.log(user)
     const bodyJson = JSON.stringify(user)
@@ -108,8 +123,8 @@ async function cadastrar_produto(){
     
     if(res.status == 201){
         const resJson = await res.json()
-        setInterval(()=>{
-            toastify("Ok, login efetuado com sucesso!","ok")
+        setTimeout(()=>{
+            toastify("Cadastrado com sucesso","ok")
         },1000)
         get_prod();
         console.log(resJson)
@@ -150,6 +165,10 @@ async function space_editar(prod){
     <label for="v_custo">Valor de Custo</label>
     <input type="text" id="v_custo" value="${prod.v_custo}">
     </div>
+    <div >
+    <select id="prod_select">
+    </select>
+    </div>
     <div class="actions">
     <button type="submit">Salvar</button>
     <button id="excluir">X</button>                
@@ -159,6 +178,15 @@ async function space_editar(prod){
 
     `
     )
+
+const res_opt = await fetch(`http://localhost:3001/opt`)
+const resJson_opt = await res_opt.json()
+resJson_opt.forEach(opt => {
+    const select = document.querySelector("#prod_select")
+    select.insertAdjacentHTML("afterbegin",`
+    <option value="${opt.id}">${opt.descr}</option>
+    `)
+});
 
 const form = document.querySelector("form")
 form.addEventListener("submit",(event)=>{
@@ -186,5 +214,5 @@ async function excluir(id){
         method: "DELETE",
         body:bodyJson
     })
-
+    get_prod();
 }
