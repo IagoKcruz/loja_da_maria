@@ -1,5 +1,1 @@
-const token = localStorage.getItem("@token");
-
-if(!token){
-    window.location.href = "/"
-}
+cadastro/index.html cadastro/script.js cadastro/style.css
