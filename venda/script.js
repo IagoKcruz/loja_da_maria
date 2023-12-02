@@ -38,10 +38,11 @@ async function render_lista(list=[]){
     const ul = document.querySelector(".vendas");
     ul.insertAdjacentHTML("afterbegin", `
     <li>
-    <p>Nome = ${venda.id}</p>
+    <p>Nome = ${venda.id_prod}</p>
     <p>Quantidade = ${venda.quantidade}</p>
     <p>Detalhe = ${venda.detalhe}</p>
     <p>Data Venda = ${venda.data_dia}/${venda.data_mes}/${venda.data_ano}</p>
+    http://localhost:3001/venda?venda_mes=12&venda_dia=1&venda_ano=2023
     </li>
     `)  
 
@@ -104,7 +105,7 @@ form.addEventListener("submit",(event)=>{
         event.preventDefault();
         console.log(event)
         cadastrar_venda()
-    })
+})
 
 const sair = document.querySelector("#sair");
 sair.addEventListener("click", ()=>{
@@ -116,11 +117,15 @@ div1.remove();
 
 async function cadastrar_venda(){
     const data_venda = document.querySelector("#date_").value
-    console.log(typeof data_venda)
     const dia = data_venda.substring(0,4)
     const mes = data_venda.substring(5,7)
     const ano = data_venda.substring(8,10)
-    console.log(`${dia}/${mes}/${ano}`)
+
+    if(document.querySelector("#quant").value == "" || data_venda == ""){
+    toastify("Estão faltando dados","Não")
+    return;
+    }
+    
     const venda = {
         id_prod : document.querySelector("#prod_select").value,
         quantidade : document.querySelector("#quant").value,
@@ -129,7 +134,6 @@ async function cadastrar_venda(){
         data_mes: mes,
         detalhe: document.querySelector("#descr").value
     }
-    console.log(venda)
     const bodyJson = JSON.stringify(venda)
     console.log(bodyJson)
     const res = await fetch(
