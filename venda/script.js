@@ -124,9 +124,9 @@ async function cadastrar_venda(){
     const venda = {
         id_prod : document.querySelector("#prod_select").value,
         quantidade : document.querySelector("#quant").value,
-        data_ano : dia,
-        data_dia : mes,
-        data_mes : ano,
+        data_ano: ano,
+        data_dia: dia,
+        data_mes: mes,
         detalhe: document.querySelector("#descr").value
     }
     console.log(venda)
