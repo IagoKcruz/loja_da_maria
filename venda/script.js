@@ -70,7 +70,7 @@ async function space_insert(){
     <select id="prod_select">
     </select>
     <label for="date">Nome</label>
-    <input type="date" id="date">            
+    <input type="date" id="date_">            
     </div>
     <div>
     <label for="quant">Quantidade</label>
@@ -115,7 +115,7 @@ div1.remove();
 }
 
 async function cadastrar_venda(){
-    const data_venda = document.querySelector("#date").value
+    const data_venda = document.querySelector("#date_").value
     console.log(typeof data_venda)
     const dia = data_venda.substring(0,4)
     const mes = data_venda.substring(5,7)
