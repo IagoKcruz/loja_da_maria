@@ -26,12 +26,12 @@ async function render_lista(list=[]){
     console.log(resJson_prod)
     list.forEach((venda)=>{
     
-    console.log(resJson_prod, venda)
+    //console.log(resJson_prod, venda)
     
     resJson_prod.forEach((prod)=>{
         if(prod.id == venda.id_prod){
             venda.id_prod = prod.nome
-            console.log(prod.nome)
+            //console.log(prod.nome)
         }
     })
 
@@ -41,13 +41,9 @@ async function render_lista(list=[]){
     <p>Nome = ${venda.id}</p>
     <p>Quantidade = ${venda.quantidade}</p>
     <p>Detalhe = ${venda.detalhe}</p>
+    <p>Data Venda = ${venda.data_dia}/${venda.data_mes}/${venda.data_ano}</p>
     </li>
     `)  
-    
-    // const li = document.querySelector("li")
-    // li.addEventListener("click",()=>{
-    //     prod_id(prod.id)
-    // })
 
     })
 
@@ -81,7 +77,7 @@ async function space_insert(){
     <input type="number" id="quant">
     </div>
     <div>
-    <label for="descr">descrição</label>
+    <label for="descr">Detalhe</label>
     <input type="text" id="descr">
     </div>
     <div>
@@ -119,17 +115,19 @@ div1.remove();
 }
 
 async function cadastrar_venda(){
-    const data_venda = document.querySelector("#date").stringify()
-    console.log(data_venda)
-    const dia = new Date(data_venda)
-    console.log(data_venda)
+    const data_venda = document.querySelector("#date").value
+    console.log(typeof data_venda)
+    const dia = data_venda.substring(0,4)
+    const mes = data_venda.substring(5,7)
+    const ano = data_venda.substring(8,10)
+    console.log(`${dia}/${mes}/${ano}`)
     const venda = {
-        id_prod : select.value,
-        quantidade :"1",
-        data_ano : "2023",
-        data_dia : "01",
-        data_mes : "12",
-        detalhe: document.querySelector("descr")
+        id_prod : document.querySelector("#prod_select").value,
+        quantidade : document.querySelector("#quant").value,
+        data_ano : dia,
+        data_dia : mes,
+        data_mes : ano,
+        detalhe: document.querySelector("#descr").value
     }
     console.log(venda)
     const bodyJson = JSON.stringify(venda)
