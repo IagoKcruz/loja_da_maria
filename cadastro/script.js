@@ -1,18 +1,14 @@
 import {toastify} from "../toastify.js"
 
-const token = localStorage.getItem("@token");
-
-async function get_user(){
-    const res = await fetch("http://localhost:3001/users")
-    const resJson = await res.json();
-    console.log(resJson)
-}
-
-get_user()
-
 const my_headers ={
     "Content-Type": "application/json"
 }
+
+const form = document.querySelector("form")
+form.addEventListener("submit",(event)=>{
+    event.preventDefault();
+    cadastrar()
+})
 
 async function cadastrar(){
     const user = {
@@ -29,8 +25,6 @@ async function cadastrar(){
         method: "POST",
         body:bodyJson
     })
-    
-    console.log(await res.json())
 
     if(res.status == 201){
         const resJson = await res.json()
@@ -39,16 +33,12 @@ async function cadastrar(){
         localStorage.setItem("@token-exemplo",resJson.accessToken)
         localStorage.setItem("@user-exemplo",JSON.stringify(resJson.user))
         setTimeout(()=>{
-            window.location.href = "/"
-        },3000)
+            window.location.href = "./"
+        },1000)
     }else{
-        toastify(res.json(),"error")
+        const resJson = await res.json()
+        toastify(resJson,"error")
     }
 
 }
 
-const form = document.querySelector("form")
-form.addEventListener("submit",(event)=>{
-    event.preventDefault();
-    cadastrar()
-})

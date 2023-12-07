@@ -37,7 +37,8 @@ async function login(){
             window.location.href = "./home"
         },2000)
     }else{
-         toastify("Email ou senha incorretos","error")
+        const resJson = await res.json()
+        toastify(resJson,"error")
     }
 
 }

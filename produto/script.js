@@ -92,7 +92,6 @@ async function space_insert(){
 
     `)
 
-
 const res_opt = await fetch(`http://localhost:3001/opt`)
 const resJson_opt = await res_opt.json()
 resJson_opt.forEach(opt => {
