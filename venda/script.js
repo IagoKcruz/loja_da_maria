@@ -1,6 +1,9 @@
-//import {toastify} from "../toastify"
+import {toastify} from "../toastify.js"
 
 const token = localStorage.getItem("@token");
+const res_prod = await fetch(`http://localhost:3001/produto`)
+console.log(res_prod)
+const resJson_prod = await res_prod.json()
 
 if(!token){
     window.location.href = "/"
@@ -19,19 +22,15 @@ async function get_venda(){
 }
 get_venda()
 
-async function render_lista(list=[]){
+export async function render_lista(list=[]){
 
     const res_prod = await fetch(`http://localhost:3001/produto`)
     const resJson_prod = await res_prod.json()
-    console.log(resJson_prod)
+
     list.forEach((venda)=>{
-    
-    //console.log(resJson_prod, venda)
-    
     resJson_prod.forEach((prod)=>{
         if(prod.id == venda.id_prod){
             venda.id_prod = prod.nome
-            //console.log(prod.nome)
         }
     })
 
@@ -42,7 +41,8 @@ async function render_lista(list=[]){
     <p>Quantidade = ${venda.quantidade}</p>
     <p>Detalhe = ${venda.detalhe}</p>
     <p>Data Venda = ${venda.data_dia}/${venda.data_mes}/${venda.data_ano}</p>
-    http://localhost:3001/venda?venda_mes=12&venda_dia=1&venda_ano=2023
+    <p>Valor total de Custo: ${venda.v_custo}</p>
+    <p>Valor total de venda: ${venda.v_venda}</p>
     </li>
     `)  
 
@@ -89,15 +89,13 @@ async function space_insert(){
 
     `)
 
-
-const res_prod = await fetch(`http://localhost:3001/produto`)
-console.log(res_prod)
-const resJson_prod = await res_prod.json()
 resJson_prod.forEach(prod => {
+    if(prod.opt_ativo == "1"){
         const select = document.querySelector("#prod_select")
         select.insertAdjacentHTML("afterbegin",`
         <option value="${prod.id}">${prod.nome}</option>
-        `)
+        `)        
+    }
 });
 
 const form = document.querySelector("form")
@@ -116,19 +114,27 @@ div1.remove();
 }
 
 async function cadastrar_venda(){
+
     const data_venda = document.querySelector("#date_").value
     const dia = data_venda.substring(0,4)
     const mes = data_venda.substring(5,7)
     const ano = data_venda.substring(8,10)
-
     if(document.querySelector("#quant").value == "" || data_venda == ""){
     toastify("Estão faltando dados","Não")
     return;
     }
-    
+    const quant = document.querySelector("#quant").value
+    const id = document.querySelector("#prod_select").value
+    const prod = resJson_prod.find(function(produto){
+        return produto.id == id
+    })
+    console.log(prod)
+
     const venda = {
-        id_prod : document.querySelector("#prod_select").value,
-        quantidade : document.querySelector("#quant").value,
+        id_prod : prod.id,
+        quantidade : quant ,
+        v_custo: prod.v_custo * quant,
+		v_venda: prod.v_venda * quant,
         data_ano: ano,
         data_dia: dia,
         data_mes: mes,
