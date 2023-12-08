@@ -1,35 +1,47 @@
-import {render_lista} from "../venda/script.js"
+import {render_lista} from "../render_lista.js"
 
-if(!token){
-    window.location.href = "/"
-}
+// if(!token){
+//     window.location.href = "/"
+// }
 
 const procurar = document.querySelector("#procurar");
 procurar.addEventListener("click", ()=>{
-    get_venda()
     console.log("cheguei aqui")
+    get_venda()
+    
 })
 
 async function get_venda(){
-    const dia = document.querySelector("#dia").value;
-    const mes = document.querySelector("#mes").value;
-    const ano = document.querySelector("#ano").value;
-    console.log(dia, mes, ano)
+    let calendario = document.querySelector("#data_venda"); 
+    let apenas_mes = document.querySelector("#mes");
+    let apenas_ano = document.querySelector("#ano");
     let res;
     let res_json;
-    if(dia == "" && ano == ""){
-        res = await fetch(`http://localhost:3001/venda?venda_mes=${mes}`)
-        res_json = await res.json();
-        render_lista(res_json)
-    }else if(mes == "" && dia == ""){
-        res = await fetch(`http://localhost:3001/venda?venda_ano=${ano}`)
-        res_json = await res.json();
-        render_lista(res_json)
-    }else{
-        res = await fetch(`http://localhost:3001/venda?venda_mes=${mes}&venda_dia=${dia}&venda_ano=${ano}`);
+    if(calendario){
+        const ano = calendario.value.substring(0,4)
+        const mes = calendario.value.substring(5,7)
+        const dia = calendario.value.substring(8,10)
+        res = await fetch(`http://localhost:3001/venda?data_mes=${mes}&data_dia=${dia}&data_ano=${ano}`);
         res_json = await res.json();
         render_lista(res_json)  
     }
+    if(apenas_ano.value == "" && calendario.value == ""){
+        res = await fetch(`http://localhost:3001/venda?data_mes=${apenas_mes.value}`);
+        res_json = await res.json();
+        render_lista(res_json)
+    }else if(apenas_mes.value == "" && calendario.value == ""){
+        res = await fetch(`http://localhost:3001/venda?data_ano=${apenas_ano.value}`)
+        res_json = await res.json();
+        render_lista(res_json)
+    }
+
+    const limpar_filtro = document.querySelector("#limpar")
+    limpar_filtro.addEventListener("click", ()=>{
+        // apenas_ano.innerHTML = "";
+        // apenas_mes.innerHTML = "";
+        // calendario.innerHTML = "";
+        window.location.reload()
+    })
     
 }
 

@@ -1,4 +1,5 @@
 import {toastify} from "../toastify.js"
+import {render_lista} from "../render_lista.js"
 
 const token = localStorage.getItem("@token");
 const res_prod = await fetch(`http://localhost:3001/produto`)
@@ -14,41 +15,12 @@ const my_headers ={
 }   
 
 async function get_venda(){
-
     const res = await fetch("http://localhost:3001/venda")
     const resJson = await res.json();
     //console.log(resJson)
     render_lista(resJson)
 }
 get_venda()
-
-export async function render_lista(list=[]){
-
-    const res_prod = await fetch(`http://localhost:3001/produto`)
-    const resJson_prod = await res_prod.json()
-
-    list.forEach((venda)=>{
-    resJson_prod.forEach((prod)=>{
-        if(prod.id == venda.id_prod){
-            venda.id_prod = prod.nome
-        }
-    })
-
-    const ul = document.querySelector(".vendas");
-    ul.insertAdjacentHTML("afterbegin", `
-    <li>
-    <p>Nome = ${venda.id_prod}</p>
-    <p>Quantidade = ${venda.quantidade}</p>
-    <p>Detalhe = ${venda.detalhe}</p>
-    <p>Data Venda = ${venda.data_dia}/${venda.data_mes}/${venda.data_ano}</p>
-    <p>Valor total de Custo: ${venda.v_custo}</p>
-    <p>Valor total de venda: ${venda.v_venda}</p>
-    </li>
-    `)  
-
-    })
-
-}
 
 const p = document.querySelector("#inserir")
 p.addEventListener("click", ()=>{
@@ -116,9 +88,9 @@ div1.remove();
 async function cadastrar_venda(){
 
     const data_venda = document.querySelector("#date_").value
-    const dia = data_venda.substring(0,4)
+    const ano = data_venda.substring(0,4)
     const mes = data_venda.substring(5,7)
-    const ano = data_venda.substring(8,10)
+    const dia = data_venda.substring(8,10)
     if(document.querySelector("#quant").value == "" || data_venda == ""){
     toastify("Estão faltando dados","Não")
     return;
