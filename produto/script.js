@@ -1,4 +1,4 @@
-import {toastify} from "../toastify.js"
+import {toastify} from "../global/toastify.js"
 
 const token = localStorage.getItem("@token");
 if(!token){
