@@ -15,9 +15,7 @@ async function cadastrar(){
         email : document.querySelector("#email").value,
         password :  document.querySelector("#senha").value
     }
-    console.log(user)
     const bodyJson = JSON.stringify(user)
-    console.log(bodyJson)
     const res = await fetch(
         "http://localhost:3001/register",
     {

@@ -1,5 +1,6 @@
-const token = localStorage.getItem("@token");
+import {toastify} from "../toastify.js"
 
+const token = localStorage.getItem("@token");
 if(!token){
     window.location.href = "/"
 }
@@ -8,7 +9,6 @@ const my_headers ={
     "Content-Type": "application/json"
 }
 
-import {toastify} from "../toastify.js"
 async function get_prod(){
 
     const res = await fetch("http://localhost:3001/produto")

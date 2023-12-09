@@ -1,4 +1,5 @@
 import {toastify} from "./toastify.js"
+
 async function get_user(){
     const res = await fetch("http://localhost:3001/users")
     const resJson = await res.json();

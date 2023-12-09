@@ -1,4 +1,4 @@
-import {render_lista} from "../render_lista.js"
+import {render_lista} from "../api_vendas.js"
 
 // if(!token){
 //     window.location.href = "/"
