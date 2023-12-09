@@ -2,7 +2,6 @@ export async function render_lista(list=[]){
 
     const res_prod = await fetch(`http://localhost:3001/produto`)
     const resJson_prod = await res_prod.json()
-
     list.forEach((venda)=>{
     resJson_prod.forEach((prod)=>{
         if(prod.id == venda.id_prod){

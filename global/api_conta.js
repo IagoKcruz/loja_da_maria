@@ -5,7 +5,7 @@ const my_headers ={
 export async function get_user(){
     const res = await fetch("http://localhost:3001/users")
     const resJson = await res.json();
-    console.log(resJson)
+    return resJson
 }
 
 export async function login(email, password){
@@ -21,4 +21,5 @@ export async function login(email, password){
         method: "POST",
         body:bodyJson
     })
+    return res;
 }

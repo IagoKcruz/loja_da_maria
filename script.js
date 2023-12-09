@@ -1,5 +1,5 @@
 import {toastify} from "./global/toastify.js"
-import {get_user} from "./global/api_conta.js"
+import {get_user, login} from "./global/api_conta.js"
 
 get_user()
 
@@ -16,6 +16,7 @@ form.addEventListener("submit", async (event)=>{
 })
 
 async function render_responce(res){
+    console.log(res)
     if(res.status == 200){
         const resJson = await res.json()
         toastify("Ok, login efetuado com sucesso!","ok")
@@ -24,7 +25,7 @@ async function render_responce(res){
         localStorage.setItem("@token_user",JSON.stringify(resJson.user))
         setTimeout(()=>{
             window.location.href = "./home"
-        },2000)
+        },1000)
     }else{
         const resJson = await res.json()
         toastify(resJson,"error")

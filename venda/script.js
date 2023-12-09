@@ -1,5 +1,5 @@
 import {toastify} from "../global/toastify.js"
-import {render_lista} from "../global/render_lista.js"
+import {render_lista} from "../global/api_vendas.js"
 
 const token = localStorage.getItem("@token");
 const res_prod = await fetch(`http://localhost:3001/produto`)

@@ -1,4 +1,4 @@
-import {toastify} from "../toastify.js"
+//import {toastify} from "./global/toastify.js"
 
 const my_headers ={
     "Content-Type": "application/json"
@@ -31,7 +31,7 @@ async function cadastrar(){
         localStorage.setItem("@token-exemplo",resJson.accessToken)
         localStorage.setItem("@user-exemplo",JSON.stringify(resJson.user))
         setTimeout(()=>{
-            window.location.href = "./"
+            window.location.href = "/"
         },1000)
     }else{
         const resJson = await res.json()
