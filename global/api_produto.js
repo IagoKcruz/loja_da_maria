@@ -46,7 +46,6 @@ export async function alterar_produto(id, nome, v_custo, v_venda, opt_ativo){
         opt_ativo : opt_ativo
     }
     const bodyJson = JSON.stringify(user)
-    console.log(bodyJson)
     const res = await fetch(
         `http://localhost:3001/produto/${id}`,
     {
@@ -55,4 +54,10 @@ export async function alterar_produto(id, nome, v_custo, v_venda, opt_ativo){
         body:bodyJson
     })
     return res;
+}
+
+export async function list_filter(id){
+    const res = await fetch(`http://localhost:3001/produto?opt_ativo=${id}`)
+    const resJson = await res.json();
+    return resJson
 }

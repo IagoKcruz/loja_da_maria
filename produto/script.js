@@ -1,5 +1,5 @@
 import {toastify} from "../global/toastify.js"
-import {get_opt, get_prod, cadastrar_produto, prod_id, alterar_produto} from "../global/api_produto.js"
+import {get_opt, get_prod, cadastrar_produto, prod_id, alterar_produto, list_filter} from "../global/api_produto.js"
 
 const token = localStorage.getItem("@token");
 if(!token){
@@ -14,7 +14,6 @@ render_lista()
 async function render_lista(){
 
     list.forEach((prod)=>{
-
     list_opt.forEach((opt)=>{
         if(opt.id == prod.opt_ativo){
             prod.opt_ativo = opt.descr
@@ -180,7 +179,8 @@ list_opt.forEach(opt => {
 const form = document.querySelector("form")
 form.addEventListener("submit",(event)=>{
     event.preventDefault()
-    dados_alterar(prod)
+    console.log(prod.id)
+    dados_alterar(prod.id)
 })
 
 const bnt_exc = document.querySelector("#excluir");
@@ -223,8 +223,8 @@ async function validação_alterar(res){
     }
 }
 
+status_prod()
 async function status_prod(){
-
     const div = document.querySelector("#status_prod");
     list_opt.forEach(opt => {    
     div.insertAdjacentHTML("afterbegin",`
@@ -233,36 +233,24 @@ async function status_prod(){
     });
     const opt_prod = document.querySelectorAll(".status");
     opt_prod.forEach(Element => {
-       Element.addEventListener("click", ()=>{
-        console.log(Element)
-        list_filter(Element.value)
+       Element.addEventListener("click", async ()=>{
+        const filtro = await list_filter(Element.value)
+        if(filtro){
+        render_filter(filtro)    
+        }
+        
         }) 
     })
 }
-status_prod()
 
-async function list_filter(id){
-
-    const res = await fetch(`http://localhost:3001/produto?opt_ativo=${id}`)
-    const resJson = await res.json();
-    //console.log(resJson)
-    render_filter(resJson)
-}
-get_prod()
 
 async function render_filter(list=[]){
     const ul = document.querySelector(".prods");
-    const res_opt = await fetch(`http://localhost:3001/opt`)
-    const resJson_opt = await res_opt.json()
     ul.innerHTML = "";
-    list.forEach((prod)=>{
-    
-    console.log(resJson_opt, prod)
-    
-    resJson_opt.forEach((opt)=>{
+    list.forEach((prod)=>{ 
+    list_opt.forEach((opt)=>{
         if(opt.id == prod.opt_ativo){
             prod.opt_ativo = opt.descr
-            console.log(opt.descr)
         }
         })
         ul.insertAdjacentHTML("afterbegin", `
@@ -275,8 +263,11 @@ async function render_filter(list=[]){
             `)  
     
         const li = document.querySelector("li")
-        li.addEventListener("click",()=>{
-            prod_id(prod.id)
+        li.addEventListener("click", async()=>{
+            const produto = await prod_id(prod.id)
+            if(produto){
+                space_editar(produto);
+            }
         })
 
     })
