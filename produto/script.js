@@ -1,5 +1,5 @@
 import {toastify} from "../global/toastify.js"
-import {get_opt, get_prod, cadastrar_produto} from "../global/api_produto.js"
+import {get_opt, get_prod, cadastrar_produto, prod_id, alterar_produto} from "../global/api_produto.js"
 
 const token = localStorage.getItem("@token");
 if(!token){
@@ -34,8 +34,11 @@ async function render_lista(){
     `)  
     
     const li = document.querySelector("li")
-    li.addEventListener("click",()=>{
-        prod_id(prod.id)
+    li.addEventListener("click", async()=>{
+        const produto = await prod_id(prod.id)
+        if(produto){
+            space_editar(produto);
+        }
     })
 
     })
@@ -48,7 +51,6 @@ p.addEventListener("click", ()=>{
 })
 
 async function space_insert(){
-
     const main = document.querySelector("main")
     const div1 = document.createElement("div")
     div1.classList.add("modal")
@@ -130,13 +132,6 @@ async function validação(res){
     }
 }
 
-async function prod_id(id){
-    console.log(id)
-    const res = await fetch(`http://localhost:3001/produto/${id}`)
-    const resJson = await res.json()
-    space_editar(resJson);
-}
-
 async function space_editar(prod){
 
     const main = document.querySelector("main")
@@ -175,9 +170,7 @@ async function space_editar(prod){
     `
     )
 
-const res_opt = await fetch(`http://localhost:3001/opt`)
-const resJson_opt = await res_opt.json()
-resJson_opt.forEach(opt => {
+list_opt.forEach(opt => {
     const select = document.querySelector("#prod_select")
     select.insertAdjacentHTML("afterbegin",`
     <option value="${opt.id}">${opt.descr}</option>
@@ -187,8 +180,7 @@ resJson_opt.forEach(opt => {
 const form = document.querySelector("form")
 form.addEventListener("submit",(event)=>{
     event.preventDefault()
-    console.log(prod.id)
-    alterar_produto(prod.id)
+    dados_alterar(prod)
 })
 
 const bnt_exc = document.querySelector("#excluir");
@@ -198,34 +190,27 @@ bnt_exc.addEventListener("click", ()=>{
 
 const sair = document.querySelector("#sair");
 sair.addEventListener("click", ()=>{
-    console.log(div)
     div.remove();
 })
 
 }
 
-async function alterar_produto(id){
+async function dados_alterar(id){
     const select = document.querySelector("#prod_select")
     if(select.value == ""){
         select.value = "1"
     }
-    const user = {
-        nome : document.querySelector("#nome").value,
-        v_venda :  document.querySelector("#v_venda").value,
-        v_custo :  document.querySelector("#v_custo").value,
-        opt_ativo : select.value
+    const nome = document.querySelector("#nome").value
+    const v_venda =  document.querySelector("#v_venda").value
+    const v_custo =  document.querySelector("#v_custo").value
+    const opt_ativo = select.value
+    const alterar = await alterar_produto(id, nome, v_custo, v_venda, opt_ativo)
+    if(alterar){
+        validação_alterar(alterar)
     }
-    console.log(user)   
-    const bodyJson = JSON.stringify(user)
-    console.log(bodyJson)
-    const res = await fetch(
-        `http://localhost:3001/produto/${id}`,
-    {
-        headers: my_headers,
-        method: "PUT",
-        body:bodyJson
-    })
-    
+}
+
+async function validação_alterar(res){
     if(res.status == 200){
         const resJson = await res.json()
         setTimeout(()=>{
@@ -236,26 +221,12 @@ async function alterar_produto(id){
     }else{
          toastify(res.json(),"error")
     }
-
-}
-
-async function excluir(id){
-
-    const res = await fetch(`http://localhost:3001/produto/${id}`,
-    {
-        headers: my_headers,
-        method: "DELETE",
-        body:bodyJson
-    })
-    get_prod();
 }
 
 async function status_prod(){
 
-    const res_opt = await fetch(`http://localhost:3001/opt`)
-    const resJson_opt = await res_opt.json()
     const div = document.querySelector("#status_prod");
-    resJson_opt.forEach(opt => {    
+    list_opt.forEach(opt => {    
     div.insertAdjacentHTML("afterbegin",`
     <button class="status" value="${opt.id}">${opt.descr}</button>
     `)
@@ -268,7 +239,6 @@ async function status_prod(){
         }) 
     })
 }
-
 status_prod()
 
 async function list_filter(id){
