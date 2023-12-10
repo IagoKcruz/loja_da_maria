@@ -6,7 +6,6 @@ import {render_lista} from "../global/api_vendas.js"
 
 const procurar = document.querySelector("#procurar");
 procurar.addEventListener("click", ()=>{
-    console.log("cheguei aqui")
     get_venda()
     
 })
