@@ -1,37 +1,26 @@
 import {toastify} from "../global/toastify.js"
+import {get_opt, get_prod, cadastrar_produto} from "../global/api_produto.js"
 
 const token = localStorage.getItem("@token");
 if(!token){
     window.location.href = "/"
 }
 
-const my_headers ={
-    "Content-Type": "application/json"
-}
+const list = await get_prod();
+const list_opt = await get_opt();
 
-async function get_prod(){
+render_lista()
 
-    const res = await fetch("http://localhost:3001/produto")
-    const resJson = await res.json();
-    //console.log(resJson)
-    render_lista(resJson)
-}
-get_prod()
-
-async function render_lista(list=[]){
-
-    const res_opt = await fetch(`http://localhost:3001/opt`)
-    const resJson_opt = await res_opt.json()
+async function render_lista(){
 
     list.forEach((prod)=>{
-    
-    console.log(resJson_opt, prod)
-    
-    resJson_opt.forEach((opt)=>{
+
+    list_opt.forEach((opt)=>{
         if(opt.id == prod.opt_ativo){
             prod.opt_ativo = opt.descr
             console.log(opt.descr)
         }
+
     })
 
     const ul = document.querySelector(".prods");
@@ -92,20 +81,17 @@ async function space_insert(){
 
     `)
 
-const res_opt = await fetch(`http://localhost:3001/opt`)
-const resJson_opt = await res_opt.json()
-resJson_opt.forEach(opt => {
-        const select = document.querySelector("#prod_select")
-        select.insertAdjacentHTML("afterbegin",`
-        <option value="${opt.id}">${opt.descr}</option>
-        `)
+list_opt.forEach(opt => {
+    const select = document.querySelector("#prod_select")
+    select.insertAdjacentHTML("afterbegin",`
+    <option value="${opt.id}">${opt.descr}</option>
+    `)
 });
 
 const form = document.querySelector("form")
 form.addEventListener("submit",(event)=>{
         event.preventDefault();
-        console.log(event)
-        cadastrar_produto()
+        dados_produto()
     })
 
 const sair = document.querySelector("#sair");
@@ -116,28 +102,22 @@ div1.remove();
 
 }
 
-async function cadastrar_produto(){
+async function dados_produto(){
     const select = document.querySelector("#prod_select")
     if(select.value == ""){
         select.value = "1"
     }
-    const user = {
-        nome : document.querySelector("#nome").value,
-        v_venda :  document.querySelector("#v_venda").value,
-        v_custo :  document.querySelector("#v_custo").value,
-        opt_ativo : select.value
+    const nome = document.querySelector("#nome").value
+    const v_venda =  document.querySelector("#v_venda").value
+    const v_custo =  document.querySelector("#v_custo").value
+    const opt_ativo = select.value
+    const cadastrar = await cadastrar_produto(nome, v_custo, v_venda, opt_ativo)
+    if(cadastrar){
+        validação(cadastrar)
     }
-    console.log(user)
-    const bodyJson = JSON.stringify(user)
-    console.log(bodyJson)
-    const res = await fetch(
-        "http://localhost:3001/produto",
-    {
-        headers: my_headers,
-        method: "POST",
-        body:bodyJson
-    })
-    
+}
+
+async function validação(res){
     if(res.status == 201){
         const resJson = await res.json()
         setTimeout(()=>{
@@ -146,9 +126,8 @@ async function cadastrar_produto(){
         window.location.reload()
         console.log(resJson)
     }else{
-         toastify(res.json(),"error")
+        toastify(res.json(),"error")
     }
-
 }
 
 async function prod_id(id){
