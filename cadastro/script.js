@@ -1,35 +1,25 @@
-//import {toastify} from "./global/toastify.js"
+import {toastify} from "../global/toastify.js"
+import {cadastrar} from "../global/api_conta.js"
 
 const my_headers ={
     "Content-Type": "application/json"
 }
 
 const form = document.querySelector("form")
-form.addEventListener("submit",(event)=>{
+form.addEventListener("submit", async (event)=>{
     event.preventDefault();
-    cadastrar()
+    const email = document.querySelector("#email").value
+    const password = document.querySelector("#senha").value
+    const responce = await cadastrar(email, password);
+    if(responce){
+    render_responce(responce); 
+    }
+    
 })
 
-async function cadastrar(){
-    const user = {
-        email : document.querySelector("#email").value,
-        password :  document.querySelector("#senha").value
-    }
-    const bodyJson = JSON.stringify(user)
-    const res = await fetch(
-        "http://localhost:3001/register",
-    {
-        headers: my_headers,
-        method: "POST",
-        body:bodyJson
-    })
-
+async function render_responce(res){
     if(res.status == 201){
-        const resJson = await res.json()
         toastify("Ok, cadastro efetuado com sucesso!","ok")
-        console.log(resJson)
-        localStorage.setItem("@token-exemplo",resJson.accessToken)
-        localStorage.setItem("@user-exemplo",JSON.stringify(resJson.user))
         setTimeout(()=>{
             window.location.href = "/"
         },1000)
@@ -39,4 +29,6 @@ async function cadastrar(){
     }
 
 }
+
+
 

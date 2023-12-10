@@ -7,7 +7,7 @@ export function toastify(message, type){
     `)
     if(type == "error"){
         const toast = document.querySelector(".toastify")
-    // toast.setAttribute("style",`background-color: ${color};`)
+        toast.setAttribute("style",`background-color: red;`)
         toast.classList.add("error")
     }
     // console.log(toast)

@@ -23,3 +23,19 @@ export async function login(email, password){
     })
     return res;
 }
+
+export async function cadastrar(email, password){
+    const user = {
+        email : email,
+        password : password 
+    }
+    const bodyJson = JSON.stringify(user)
+    const res = await fetch(
+        "http://localhost:3001/register",
+    {
+        headers: my_headers,
+        method: "POST",
+        body:bodyJson
+    })
+    return res;
+}
