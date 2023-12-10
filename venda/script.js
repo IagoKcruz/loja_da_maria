@@ -1,26 +1,14 @@
 import {toastify} from "../global/toastify.js"
-import {render_lista} from "../global/api_vendas.js"
+import {cadastrar_venda, render_lista} from "../global/api_vendas.js"
+import {get_prod} from "../global/api_produto.js"
 
+const res_prod = await get_prod()
 const token = localStorage.getItem("@token");
-const res_prod = await fetch(`http://localhost:3001/produto`)
-console.log(res_prod)
-const resJson_prod = await res_prod.json()
-
 if(!token){
     window.location.href = "/"
-}
+} 
 
-const my_headers ={
-    "Content-Type": "application/json"
-}   
-
-async function get_venda(){
-    const res = await fetch("http://localhost:3001/venda")
-    const resJson = await res.json();
-    //console.log(resJson)
-    render_lista(resJson)
-}
-get_venda()
+render_lista()
 
 const p = document.querySelector("#inserir")
 p.addEventListener("click", ()=>{
@@ -61,7 +49,7 @@ async function space_insert(){
 
     `)
 
-resJson_prod.forEach(prod => {
+res_prod.forEach(prod => {
     if(prod.opt_ativo == "1"){
         const select = document.querySelector("#prod_select")
         select.insertAdjacentHTML("afterbegin",`
@@ -74,7 +62,7 @@ const form = document.querySelector("form")
 form.addEventListener("submit",(event)=>{
         event.preventDefault();
         console.log(event)
-        cadastrar_venda()
+        dados_venda()
 })
 
 const sair = document.querySelector("#sair");
@@ -85,8 +73,7 @@ div1.remove();
 
 }
 
-async function cadastrar_venda(){
-
+async function dados_venda(){
     const data_venda = document.querySelector("#date_").value
     const ano = data_venda.substring(0,4)
     const mes = data_venda.substring(5,7)
@@ -97,11 +84,9 @@ async function cadastrar_venda(){
     }
     const quant = document.querySelector("#quant").value
     const id = document.querySelector("#prod_select").value
-    const prod = resJson_prod.find(function(produto){
+    const prod = res_prod.find(function(produto){
         return produto.id == id
     })
-    console.log(prod)
-
     const venda = {
         id_prod : prod.id,
         quantidade : quant ,
@@ -112,15 +97,13 @@ async function cadastrar_venda(){
         data_mes: mes,
         detalhe: document.querySelector("#descr").value
     }
-    const bodyJson = JSON.stringify(venda)
-    console.log(bodyJson)
-    const res = await fetch(
-         "http://localhost:3001/venda",
-    {
-        headers: my_headers,
-        method: "POST",
-        body:bodyJson
-    })
+    const inserir_venda = await cadastrar_venda(venda);
+    if(inserir_venda){
+        validacao(inserir_venda)
+    }
+}
+
+async function validacao(res){
     if(res.status == 201){
         const resJson = await res.json()
         setTimeout(()=>{
@@ -131,5 +114,5 @@ async function cadastrar_venda(){
     }else{
          toastify(res.json(),"error")
     }
-
 }
+

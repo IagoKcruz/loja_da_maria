@@ -22,7 +22,8 @@ async function get_venda(){
         const dia = calendario.value.substring(8,10)
         res = await fetch(`http://localhost:3001/venda?data_mes=${mes}&data_dia=${dia}&data_ano=${ano}`);
         res_json = await res.json();
-        render_lista(res_json)  
+        render_lista(res_json)
+        render_relatorio(res_json); 
     }
     if(apenas_ano.value == "" && calendario.value == ""){
         res = await fetch(`http://localhost:3001/venda?data_mes=${apenas_mes.value}`);
@@ -40,7 +41,29 @@ async function get_venda(){
         // apenas_mes.innerHTML = "";
         // calendario.innerHTML = "";
         window.location.reload()
+        render_lista()
     })
     
 }
+async function render_relatorio(list){
 
+    const quantidade = list.reduce((prev, next) => {
+        return prev + parseInt(next.quantidade);
+    }, 0);
+    const total_custo = list.reduce((prev, next) => {
+        return prev + parseInt(next.v_custo);
+    }, 0);
+    const total_venda = list.reduce((prev, next) => {
+        return prev + parseInt(next.v_venda);
+    }, 0);
+
+    const ul = document.querySelector(".vendas");
+    ul.insertAdjacentHTML("afterbegin", `
+    <li>
+    <p>Quantidade = ${quantidade}</p>
+    <p>Valor total de Custo: ${total_custo}</p>
+    <p>Valor total de venda: ${total_venda}</p>
+    </li>
+    `)  
+
+}
