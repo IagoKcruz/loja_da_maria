@@ -9,6 +9,7 @@ procurar.addEventListener("click", ()=>{
     get_venda()
     
 })
+const ul = document.querySelector(".vendas");
 
 async function get_venda(){
     let calendario = document.querySelector("#data_venda"); 
@@ -22,16 +23,19 @@ async function get_venda(){
         const dia = calendario.value.substring(8,10)
         res = await fetch(`http://localhost:3001/venda?data_mes=${mes}&data_dia=${dia}&data_ano=${ano}`);
         res_json = await res.json();
+        ul.innerHTML =""
         render_lista(res_json)
         render_relatorio(res_json); 
     }
     if(apenas_ano.value == "" && calendario.value == ""){
         res = await fetch(`http://localhost:3001/venda?data_mes=${apenas_mes.value}`);
         res_json = await res.json();
+        ul.innerHTML =""
         render_lista(res_json)
     }else if(apenas_mes.value == "" && calendario.value == ""){
         res = await fetch(`http://localhost:3001/venda?data_ano=${apenas_ano.value}`)
         res_json = await res.json();
+        ul.innerHTML =""
         render_lista(res_json)
     }
 
@@ -56,14 +60,12 @@ async function render_relatorio(list){
     const total_venda = list.reduce((prev, next) => {
         return prev + parseInt(next.v_venda);
     }, 0);
-
-    const ul = document.querySelector(".vendas");
-    ul.insertAdjacentHTML("afterbegin", `
-    <li>
+    const div = document.querySelector("#custos");
+    div.insertAdjacentHTML("afterbegin", `
+    <p>RELATÓRIO</p>
     <p>Quantidade = ${quantidade}</p>
     <p>Valor total de Custo: ${total_custo}</p>
     <p>Valor total de venda: ${total_venda}</p>
-    </li>
     `)  
 
 }
