@@ -231,6 +231,9 @@ async function status_prod(){
     <button class="status" value="${opt.id}">${opt.descr}</button>
     `)
     });
+    div.insertAdjacentHTML("beforeend", `
+    <button class="status" id="limpar">X</button>
+    `)
     const opt_prod = document.querySelectorAll(".status");
     opt_prod.forEach(Element => {
        Element.addEventListener("click", async ()=>{
@@ -238,8 +241,14 @@ async function status_prod(){
         if(filtro){
         render_filter(filtro)    
         }
-        
         }) 
+    })
+    const limpar = document.querySelector("#limpar")
+    limpar.addEventListener("click", async()=>{
+        const filtro = await get_prod(Element.value)
+        if(filtro){
+        render_filter(filtro)    
+        }
     })
 }
 
