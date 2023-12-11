@@ -62,25 +62,27 @@ async function space_insert(){
     <div id="modal_inserir">
     <button id="sair">X</button>
     <p>Inserir Produto</p>
+    <div id="form">
     <form>
-    <div>
+    <div class="item_form">
     <label for="nome">Nome</label>
     <input type="text" id="nome">            
     </div>
-    <div>
+    <div class="item_form">
     <label for="v_venda">Valor de Venda</label>
     <input type="text" id="v_venda">
     </div>
-    <div>
+    <div class="item_form">
     <label for="v_custo">Valor de Custo</label>
     <input type="text" id="v_custo">
     </div>
-    <div>
+    <div class="select_form">
     <select id="prod_select">
     </select>
     </div>
     <button type="submit">Cadastrar</button>
     </form> 
+    </div>
     </div>
 
     `)
@@ -141,31 +143,30 @@ async function space_editar(prod){
     div.classList.add("modal")
     main.appendChild(div)
     div.insertAdjacentHTML("afterbegin", `
-    
     <div id="modal_inserir" >
     <button id="sair">X</button>
     <p>Editar Produto</p>
+    <div id="form">
     <form>
-    <div>
+    <div class="item_form">
     <label for="nome">Nome</label>
     <input type="text" id="nome" value="${prod.nome}">            
     </div>
-    <div>
+    <div class="item_form">
     <label for="v_venda">Valor de Venda</label>
     <input type="text" id="v_venda" value="${prod.v_venda}">
     </div>
-    <div>
+    <div class="item_form">
     <label for="v_custo">Valor de Custo</label>
     <input type="text" id="v_custo" value="${prod.v_custo}">
     </div>
-    <div >
+    <div class="select_form">
     <select id="prod_select">
     </select>
     </div>
-    <div class="actions">
     <button type="submit">Salvar</button>                 
-    </div>
     </form>
+    </div>
     </div>
 
     `

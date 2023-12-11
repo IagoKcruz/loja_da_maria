@@ -85,51 +85,82 @@ main{
 #modal_inserir{
     position: relative;
     font-weight: 100;
-    width:250px;
-    height:250px;
-    background-color: whitesmoke;
+    width:280px;
+    height:280px;
+    background-color: rgb(179, 179, 179);
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;  
-    
+    border-radius: 15px;
+    & p{
+        width: 100%;
+        height: auto;
+        background-color: grey;  
+        padding: 10px 0;
+        font-size: 20px;
+        text-align: center;
+        border-top-right-radius: 15px;
+        border-top-left-radius: 15px;
+    }
     & #sair{
         position: absolute;
-        top:5px;
-        right: 5px;
+        top: 13px;
+        right: 10px;
         color: rgb(216, 7, 7);
         background-color: transparent;
         border: none;
         font-weight: 900;
     } 
+    & #form{
+        padding: 3px 10px;
+    }
 }
 #modal_inserir  form{
+    margin-top: 20px;
+    width: 100%;
+    height: auto;
     display: flex;
     flex-direction: column;
-    text-align: center;
-    align-items: center;
-    gap: 10px;
-    margin-top: 20px;
     & button{
-        width: 80px;
+        position: absolute;
+        bottom: 10px;
+        align-self: center;
+        width: 100px;
         padding: 5px 6px;
         border: none;
-        background-color: rgba(255, 255, 255, 0.089);
+        background-color:rgb(2, 138, 8);
     } button:hover{
         background-color: white;
     }
-    & div{
-        display: flex;
-        justify-content: space-around;
-    }
-    & input {
-        width: 30px;
-        height: 20px;
+}
+
+.item_form{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 10px 10px;
+    & input{
+        border-radius: 50px;
         border: none;
-        text-align: center;
+        outline: none;
+        height: 20px;
+        width: 70px;
+        padding: 0 10px;
     }
     & #nome{
-        width: 100px;
+        width: 120px;
     }
+    
+}
 
+.select_form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 10px 10px;
+    border:none;
+    border-radius: 50px;
+    outline: none;
 }
