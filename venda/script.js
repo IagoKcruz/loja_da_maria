@@ -32,25 +32,29 @@ async function space_insert(){
     <div id="modal_inserir">
     <button id="sair">X</button>
     <p>Inserir Produto</p>
+    <div id="form">
     <form>
-    <div>
+    <div class="select_form">
     <select id="prod_select">
     </select>
-    <label for="date">Nome</label>
+    </div>
+    <div class="item_form">
+    <label for="date">Data</label>
     <input type="date" id="date_">            
     </div>
-    <div>
+    <div class="item_form">
     <label for="quant">Quantidade</label>
     <input type="number" id="quant">
     </div>
-    <div>
+    <div class="item_form">
     <label for="descr">Detalhe</label>
     <input type="text" id="descr">
     </div>
-    <div>
+    <div class="item_form">
     </div>
     <button type="submit">Cadastrar</button>
     </form> 
+    </div>
     </div>
 
     `)

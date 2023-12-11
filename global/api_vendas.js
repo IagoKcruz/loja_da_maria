@@ -22,12 +22,14 @@ export async function render_lista(list=[]){
     const ul = document.querySelector(".vendas");
     ul.insertAdjacentHTML("afterbegin", `
     <li>
+    <div>
     <p>Nome = ${venda.id_prod}</p>
     <p>Quantidade = ${venda.quantidade}</p>
-    <p>Detalhe = ${venda.detalhe}</p>
+    <p id="detalhe">Detalhe = ${venda.detalhe}</p>
     <p>Data Venda = ${venda.data_dia}/${venda.data_mes}/${venda.data_ano}</p>
-    <p>Valor total de Custo: ${venda.v_custo}</p>
-    <p>Valor total de venda: ${venda.v_venda}</p>
+    <p>Custo: ${venda.v_custo}</p>
+    <p>venda: ${venda.v_venda}</p>
+    </div>
     </li>
     `)  
 
