@@ -1,7 +1,6 @@
 export function menu(){
     const nav = document.querySelector("nav")
     nav.insertAdjacentHTML("afterbegin", `
-    <nav>
     <a href="../home/">
     <img src="../icones/menuicone.png">
     <div>
@@ -26,6 +25,5 @@ export function menu(){
         <p>VENDA</p>                
     </div>
     </a>
-    </nav>
     `)
 }

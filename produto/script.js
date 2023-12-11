@@ -1,5 +1,6 @@
 import {toastify} from "../global/toastify.js"
 import {get_opt, get_prod, cadastrar_produto, prod_id, alterar_produto, list_filter} from "../global/api_produto.js"
+import {menu} from "../global/menu.js"
 
 const token = localStorage.getItem("@token");
 if(!token){
@@ -9,6 +10,7 @@ if(!token){
 const list = await get_prod();
 const list_opt = await get_opt();
 
+menu()
 render_lista()
 
 async function render_lista(){

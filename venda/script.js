@@ -1,6 +1,7 @@
 import {toastify} from "../global/toastify.js"
 import {cadastrar_venda, render_lista, get_venda} from "../global/api_vendas.js"
 import {get_prod} from "../global/api_produto.js"
+import {menu} from "../global/menu.js"
 
 const venda = await get_venda();
 const res_prod = await get_prod()
@@ -9,6 +10,7 @@ if(!token){
     window.location.href = "/"
 } 
 
+menu()
     
 if(venda){
     render_lista(venda)
