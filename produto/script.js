@@ -9,7 +9,6 @@ if(!token){
 
 const list = await get_prod();
 const list_opt = await get_opt();
-
 menu()
 render_lista()
 
@@ -27,10 +26,12 @@ async function render_lista(){
     const ul = document.querySelector(".prods");
     ul.insertAdjacentHTML("afterbegin", `
     <li>
+    <div>
     <p>Nome = ${prod.nome}</p>
     <p>Preço de Custo= ${prod.v_custo}</p>
     <p>Proço de Venda = ${prod.v_venda}</p>
     <p>Status = ${prod.opt_ativo}</p>
+    </div>
     </li>
     `)  
     
@@ -266,10 +267,12 @@ async function render_filter(list=[]){
         })
         ul.insertAdjacentHTML("afterbegin", `
             <li>
+            <div>
             <p>Nome = ${prod.nome}</p>
             <p>Preço de Custo= ${prod.v_custo}</p>
             <p>Proço de Venda = ${prod.v_venda}</p>
             <p>Status = ${prod.opt_ativo}</p>
+            </div>
             </li>
             `)  
     
