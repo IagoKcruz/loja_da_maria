@@ -163,8 +163,7 @@ async function space_editar(prod){
     </select>
     </div>
     <div class="actions">
-    <button type="submit">Salvar</button>
-    <button id="excluir">X</button>                
+    <button type="submit">Salvar</button>                 
     </div>
     </form>
     </div>
@@ -184,11 +183,6 @@ form.addEventListener("submit",(event)=>{
     event.preventDefault()
     console.log(prod.id)
     dados_alterar(prod.id)
-})
-
-const bnt_exc = document.querySelector("#excluir");
-bnt_exc.addEventListener("click", ()=>{
-    excluir(prod.id);
 })
 
 const sair = document.querySelector("#sair");
