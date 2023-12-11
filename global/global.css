@@ -1,3 +1,4 @@
+
 *{
     margin: 0;
     padding: 0;
@@ -32,3 +33,40 @@ ul, li{
     padding: 10px;
     list-style: none;
 }
+nav{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 33px;
+    height: 100%;
+    background-color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    gap: 30px;
+    transition: 1s;
+    border-right: solid 3px rgba(0, 0, 0, 0.363);
+    & a{
+    width: 100%;
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.836);
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    padding: 30px 5px;
+    }
+}
+nav:hover{
+    transition: 1s;
+    width: 130px;    
+}
+nav a img{
+    width: 20px;
+}
+nav a div{
+    width: 110px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
