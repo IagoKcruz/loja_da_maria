@@ -21,7 +21,7 @@ main{
     flex-direction: column;
     max-width: 1024px;
     width: 100%;
-
+    gap: 10px;
 }
 footer{
     padding: 15px;
@@ -29,5 +29,6 @@ footer{
     bottom: 0;
 }
 ul, li{
+    padding: 10px;
     list-style: none;
 }
