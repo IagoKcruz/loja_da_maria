@@ -20,7 +20,6 @@ header{
 }
 main{
     margin: 0 auto;
-    padding: 22px 32px;
     display: flex;
     flex-direction: column;
     max-width: 900px;
@@ -29,9 +28,9 @@ main{
     height: 100%;
 }
 footer{
-    padding: 15px;
-    text-align: center;
-    bottom: 0;
+    position: absolute;
+    bottom: 10px;
+    align-self: center;   
 }
 ul, li{
     padding: 10px;
