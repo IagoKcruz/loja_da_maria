@@ -1,14 +1,18 @@
 import {toastify} from "../global/toastify.js"
-import {cadastrar_venda, render_lista} from "../global/api_vendas.js"
+import {cadastrar_venda, render_lista, get_venda} from "../global/api_vendas.js"
 import {get_prod} from "../global/api_produto.js"
 
+const venda = await get_venda();
 const res_prod = await get_prod()
 const token = localStorage.getItem("@token");
 if(!token){
     window.location.href = "/"
 } 
 
-render_lista()
+    
+if(venda){
+    render_lista(venda)
+}
 
 const p = document.querySelector("#inserir")
 p.addEventListener("click", ()=>{

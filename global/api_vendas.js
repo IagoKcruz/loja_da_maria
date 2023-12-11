@@ -8,7 +8,7 @@ export async function get_venda(){
     //console.log(resJson)
     render_lista(resJson)
 }
-get_venda()
+
 export async function render_lista(list=[]){
 
     const res_prod = await fetch(`http://localhost:3001/produto`)
@@ -19,7 +19,6 @@ export async function render_lista(list=[]){
             venda.id_prod = prod.nome
         }
     })
-
     const ul = document.querySelector(".vendas");
     ul.insertAdjacentHTML("afterbegin", `
     <li>
@@ -48,3 +47,13 @@ export async function cadastrar_venda(venda){
     })
     return res
 }
+
+export async function pesquisar_venda(data){
+    const res = await fetch("http://localhost:3001/venda?" + data)
+    const resJson = await res.json();
+    //console.log(resJson)
+    render_lista(resJson)
+    return resJson
+}
+
+
