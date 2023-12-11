@@ -40,15 +40,16 @@ nav{
     position: fixed;
     left: 0;
     top: 0;
-    width: 33px;
+    width: 32px;
     height: 100%;
     background-color: whitesmoke;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     overflow: hidden;
     gap: 30px;
     transition: 1s;
-    border-right: solid 3px rgba(0, 0, 0, 0.363);
+    border-right: solid 2px rgba(0, 0, 0, 0.212);
     & a{
     width: 100%;
     text-decoration: none;
@@ -66,11 +67,5 @@ nav:hover{
 }
 nav a img{
     width: 20px;
-}
-nav a div{
-    width: 110px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
 }
 
