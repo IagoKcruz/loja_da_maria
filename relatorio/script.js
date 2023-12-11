@@ -15,6 +15,12 @@ procurar.addEventListener("click", ()=>{
     data_venda()
 })
 
+// async function ativacao(){
+//     const calendario = document.querySelector("#data_venda"); 
+//     const apenas_mes = document.querySelector("#mes");
+//     const apenas_ano = document.querySelector("#ano");
+// }
+
 async function data_venda(){
     let data_pesquisa = "";
     let ul = document.querySelector(".vendas");
@@ -35,7 +41,7 @@ async function data_venda(){
         }
     }
     if(apenas_ano.value == "" && calendario.value == ""){
-        data_pesquisa = `data_ano=${apenas_mes.value}`;
+        data_pesquisa = `venda?data_mes=${apenas_mes.value}`;
         pesquisa = await pesquisar_venda(data_pesquisa);
         if(pesquisa){
             ul.innerHTML=""
@@ -43,7 +49,15 @@ async function data_venda(){
             render_relatorio(pesquisa)            
         }            
     }else if(apenas_mes.value == "" && calendario.value == ""){
-        data_pesquisa = `data_ano=${apenas_ano.value}`;
+        data_pesquisa = `venda?data_ano=${apenas_ano.value}`;
+        pesquisa = await pesquisar_venda(data_pesquisa);
+        if(pesquisa){
+            ul.innerHTML=""
+            render_lista(pesquisa)
+            render_relatorio(pesquisa)            
+        }
+    }else if(calendario.value == ""){
+        data_pesquisa = `venda?data_ano=${apenas_ano.value}&data_ano=${apenas_ano.value}`;
         pesquisa = await pesquisar_venda(data_pesquisa);
         if(pesquisa){
             ul.innerHTML=""
@@ -59,7 +73,6 @@ async function data_venda(){
     
 }
 async function render_relatorio(list){
-    console.log(list)
     const quantidade = list.reduce((prev, next) => {
         return prev + parseInt(next.quantidade);
     }, 0);

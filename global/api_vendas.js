@@ -51,8 +51,6 @@ export async function cadastrar_venda(venda){
 export async function pesquisar_venda(data){
     const res = await fetch("http://localhost:3001/" + data)
     const resJson = await res.json();
-    //console.log(resJson)
-    console.log(resJson)
     return resJson
 }
 
