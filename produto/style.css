@@ -1,29 +1,32 @@
 main{
     background-color: whitesmoke;
-    max-height: 410px;
-    height: 100%;
+    height: 600px;
     padding: 20px 32px;
 }
 #produto{
+    margin-top: 20px;
     overflow-x: auto;
+    width: 100%;
+    height: 100%;
 }
 .prods{
     display: flex;
     flex-wrap: wrap;
-    padding: 32px;
+    padding: 10px;
     width: 100%;
-    height: 270px;
+    height: 400px;
     gap: 20px;  
     justify-content: center;
 }
 .prods li{
     background-color: white;
-    width: 200px;
-    height: 180px;
+    width: 180px;
+    height: 150px;
     border: solid 2px white;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 10pt;
     & div{
         display: flex;
         flex-direction: column;
@@ -31,6 +34,7 @@ main{
         gap: 10px;
     }
 }.prods li:hover{
+    cursor: pointer;
     border: solid 2px rgba(0, 0, 0, 0.267);
 }
 
