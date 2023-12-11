@@ -3,10 +3,11 @@ import {render_lista, get_venda, pesquisar_venda} from "../global/api_vendas.js"
 // if(!token){
 //     window.location.href = "/"
 // }
-let pesquisa = await pesquisar_venda();  
+let pesquisa  
 const venda = await get_venda();    
 if(venda){
-    render_lista(venda)
+    render_relatorio(venda)
+    render_lista(venda);
 }
 
 const procurar = document.querySelector("#procurar");
@@ -58,7 +59,7 @@ async function data_venda(){
     
 }
 async function render_relatorio(list){
-
+    console.log(list)
     const quantidade = list.reduce((prev, next) => {
         return prev + parseInt(next.quantidade);
     }, 0);
@@ -75,6 +76,7 @@ async function render_relatorio(list){
     <p>Quantidade = ${quantidade}</p>
     <p>Valor total de Custo: ${total_custo}</p>
     <p>Valor total de venda: ${total_venda}</p>
+    <p>Lucro: ${total_venda - total_custo}</p>
     `)  
 
 }

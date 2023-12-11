@@ -6,7 +6,7 @@ export async function get_venda(){
     const res = await fetch("http://localhost:3001/venda")
     const resJson = await res.json();
     //console.log(resJson)
-    render_lista(resJson)
+    return resJson
 }
 
 export async function render_lista(list=[]){
@@ -49,10 +49,10 @@ export async function cadastrar_venda(venda){
 }
 
 export async function pesquisar_venda(data){
-    const res = await fetch("http://localhost:3001/venda?" + data)
+    const res = await fetch("http://localhost:3001/" + data)
     const resJson = await res.json();
     //console.log(resJson)
-    render_lista(resJson)
+    console.log(resJson)
     return resJson
 }
 
