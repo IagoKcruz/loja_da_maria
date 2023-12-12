@@ -118,7 +118,7 @@ async function dados_produto(){
     const v_custo =  document.querySelector("#v_custo").value
     const opt_ativo = select.value
     if(nome == "" || v_custo == "" || v_venda== "" || opt_ativo == ""){
-        toastify("Estão faltando dados","Não")
+        toastify("Estão faltando dados","error")
         return;
     }
     const cadastrar = await cadastrar_produto(nome, v_custo, v_venda, opt_ativo)
