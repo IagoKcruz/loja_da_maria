@@ -59,7 +59,7 @@ async function data_venda(){
             render_relatorio(pesquisa)            
         }
     }else if(calendario.value == ""){
-        data_pesquisa = `venda?data_ano=${apenas_ano.value}&data_ano=${apenas_ano.value}`;
+        data_pesquisa = `venda?data_mes=${apenas_mes.value}&data_ano=${apenas_ano.value}`;
         pesquisa = await pesquisar_venda(data_pesquisa);
         if(pesquisa){
             ul.innerHTML=""
@@ -87,11 +87,13 @@ async function render_relatorio(list){
     const div = document.querySelector("#custos");
     div.innerHTML = "";
     div.insertAdjacentHTML("afterbegin", `
+    <div>
     <p>RELATÓRIO</p>
     <p>Quantidade = ${quantidade}</p>
     <p>Valor total de Custo: ${total_custo}</p>
     <p>Valor total de venda: ${total_venda}</p>
     <p>Lucro: ${total_venda - total_custo}</p>
+    </div>
     `)  
 
 }

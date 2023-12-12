@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Relatório</title>
     <link rel="stylesheet" href="../global/global.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
@@ -13,21 +14,23 @@
 
     <main>
         <nav></nav>
-        <section id="calendario">
+        <section class="calendario">
             <input type="date" id="data_venda">
             <input type="number" id="mes" placeholder="mes">
             <input type="number" id="ano" placeholder="ano">
             <button id="procurar">Procurar</button>
             <button id="limpar">Limpar Filtro</button>
         </section>
-        <section id="vendas">
+        <div id="dados">
+        <section id="venda">
             <ul class="vendas">
 
             </ul>
         </section>
         <section id="custos">
         
-        </section>
+        </section>            
+        </div>
     </main>
     <footer>
         <p style="font-size: 12; font-weight: 500;">Brigadeiro da Maria</p>
