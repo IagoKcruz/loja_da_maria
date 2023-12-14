@@ -52,7 +52,7 @@ export async function cadastrar_venda(venda){
 }
 
 export async function pesquisar_venda(data){
-    const res = await fetch(url + data)
+    const res = await fetch(url +"/"+ data)
     const resJson = await res.json();
     return resJson
 }
