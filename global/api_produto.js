@@ -10,7 +10,7 @@ export async function get_prod(){
 }
 
 export async function get_opt(){
-    const res = await fetch(url+"opt")
+    const res = await fetch(url+"/opt")
     const resJson = await res.json();
     return resJson;
 }
