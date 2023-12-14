@@ -16,7 +16,7 @@ export async function login(email, password){
     }
     const bodyJson = JSON.stringify(user)
     const res = await fetch(
-        url+"login",
+        url+"/login",
     {
         headers: my_headers,
         method: "POST",
