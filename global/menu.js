@@ -1,11 +1,6 @@
 export function menu(){
     const nav = document.querySelector("nav")
     nav.insertAdjacentHTML("afterbegin", `
-    <a href="../home/">
-    <img src="../icones/menuicone.png">
-    <div>
-    <p>HOME</p>                
-    </div>
     </a>
     <a href="../produto/">
     <img src="../icones/produto.png">
@@ -27,3 +22,9 @@ export function menu(){
     </a>
     `)
 }
+
+{/* <a href="../home/">
+<img src="../icones/menuicone.png">
+<div>
+<p>HOME</p>                
+</div> */}
