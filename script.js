@@ -24,7 +24,7 @@ async function render_responce(res){
         localStorage.setItem("@token",resJson.accessToken)
         localStorage.setItem("@token_user",JSON.stringify(resJson.user))
         setTimeout(()=>{
-            window.location.href = "./home"
+            window.location.href = "./produto/"
         },1000)
     }else{
         const resJson = await res.json()

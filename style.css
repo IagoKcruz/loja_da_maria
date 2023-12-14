@@ -4,7 +4,7 @@
     box-sizing: border-box;
 }
 body{
-    background-color: #2b2823;
+    background-color: whitesmoke;
 }
 header{
     top: 0;
@@ -14,7 +14,6 @@ header{
     background-color: transparent;
 }
 main{
-    position: relative;
     max-width: 900px;
     width: 100%;
     margin: 150px auto;
@@ -51,7 +50,7 @@ main{
 #form_lg{
     width: 100%;
     margin: 0 auto;
-    background-color: #4a4aee;
+    background-color:bisque;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -136,3 +135,13 @@ main{
         width: 40%;
     }
 }
+@keyframes saidatoasty {
+    0%{
+        opacity: 0%;
+    }50%{
+        opacity: 100%;
+    }100%{
+        opacity: 0%;
+    }
+}
+

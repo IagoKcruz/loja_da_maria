@@ -1,8 +1,10 @@
 import {render_lista, get_venda, pesquisar_venda} from "../global/api_vendas.js"
 import {menu} from "../global/menu.js"
-// if(!token){
-//     window.location.href = "/"
-// }
+
+const token = localStorage.getItem("@token");
+if(!token){
+    window.location.href = "/"
+}
 menu()
 
 let pesquisa  

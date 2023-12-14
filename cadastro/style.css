@@ -4,7 +4,7 @@
     box-sizing: border-box;
 }
 body{
-    background-color: #2b2823;
+    background-color: whitesmoke;
 }
 header{
     top: 0;
@@ -52,7 +52,7 @@ main{
 #form_cd{
     width: 100%;
     margin: 0 auto;
-    background-color: #4a4aee;
+    background-color:bisque;
     display: flex;
     justify-content: center;
     align-items: center;

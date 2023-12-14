@@ -1,9 +1,10 @@
 const my_headers ={
     "Content-Type": "application/json"
 }
-
+//const url = "http://localhost:3001/"
+const url = "";
 export async function get_venda(){
-    const res = await fetch("http://localhost:3001/venda")
+    const res = await fetch(url+"/venda")
     const resJson = await res.json();
     //console.log(resJson)
     return resJson
@@ -11,7 +12,7 @@ export async function get_venda(){
 
 export async function render_lista(list=[]){
 
-    const res_prod = await fetch(`http://localhost:3001/produto`)
+    const res_prod = await fetch(url+"/produto")
     const resJson_prod = await res_prod.json()
     list.forEach((venda)=>{
     resJson_prod.forEach((prod)=>{
@@ -41,7 +42,7 @@ export async function cadastrar_venda(venda){
     const bodyJson = JSON.stringify(venda)
     console.log(bodyJson)
     const res = await fetch(
-         "http://localhost:3001/venda",
+        url+"/venda",
     {
         headers: my_headers,
         method: "POST",
@@ -51,7 +52,7 @@ export async function cadastrar_venda(venda){
 }
 
 export async function pesquisar_venda(data){
-    const res = await fetch("http://localhost:3001/" + data)
+    const res = await fetch(url + data)
     const resJson = await res.json();
     return resJson
 }

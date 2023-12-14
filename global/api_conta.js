@@ -1,9 +1,10 @@
 const my_headers ={
     "Content-Type": "application/json"
 }
-
+//const url = "http://localhost:3001/"
+const url = "";
 export async function get_user(){
-    const res = await fetch("http://localhost:3001/users")
+    const res = await fetch(url+"/users")
     const resJson = await res.json();
     return resJson
 }
@@ -15,7 +16,7 @@ export async function login(email, password){
     }
     const bodyJson = JSON.stringify(user)
     const res = await fetch(
-        "http://localhost:3001/login",
+        url+"login",
     {
         headers: my_headers,
         method: "POST",
@@ -31,7 +32,7 @@ export async function cadastrar(email, password){
     }
     const bodyJson = JSON.stringify(user)
     const res = await fetch(
-        "http://localhost:3001/register",
+        url+"/register",
     {
         headers: my_headers,
         method: "POST",
