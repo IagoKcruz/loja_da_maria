@@ -73,3 +73,8 @@ nav a img{
         opacity: 0%;
     }
 }
+
+button:hover{
+    transition: 4s;
+    opacity: 50%;
+}

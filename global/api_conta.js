@@ -2,7 +2,7 @@ const my_headers ={
     "Content-Type": "application/json"
 }
 //const url = "http://localhost:3001/"
-const url = "";
+const url = "https://server-loja-maria.onrender.com";
 export async function get_user(){
     const res = await fetch(url+"/users")
     const resJson = await res.json();
