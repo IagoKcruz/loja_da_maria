@@ -58,7 +58,7 @@ export async function alterar_produto(id, nome, v_custo, v_venda, opt_ativo){
 }
 
 export async function list_filter(id){
-    const res = await fetch(`${url}produto?opt_ativo=${id}`)
+    const res = await fetch(`${url}/produto?opt_ativo=${id}`)
     const resJson = await res.json();
     return resJson
 }
