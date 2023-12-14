@@ -28,6 +28,7 @@ async function render_responce(res){
         },1000)
     }else{
         const resJson = await res.json()
+        console.log(resJson)
         toastify(resJson,"error")
     }
 
